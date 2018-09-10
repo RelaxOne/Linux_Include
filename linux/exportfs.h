@@ -190,6 +190,7 @@ struct fid {
  *    get_name is not (which is possibly inconsistent)
  */
 
+//网络文件系统的导出操作函数集合
 struct export_operations {
 	int (*encode_fh)(struct inode *inode, __u32 *fh, int *max_len,
 			struct inode *parent);

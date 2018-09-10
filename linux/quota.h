@@ -318,7 +318,7 @@ struct quota_format_ops {
 	int (*get_next_id)(struct super_block *sb, struct kqid *qid);	/* Get next ID with existing structure in the quota file */
 };
 
-/* Operations working with dquots */
+/* 文件系统配额操作函数集合 */
 struct dquot_operations {
 	int (*write_dquot) (struct dquot *);		/* Ordinary dquot write */
 	struct dquot *(*alloc_dquot)(struct super_block *, int);	/* Allocate memory for new dquot */
@@ -430,7 +430,7 @@ struct qc_info {
 	unsigned int i_rt_spc_warnlimit;	/* Ditto for real-time space */
 };
 
-/* Operations handling requests from userspace */
+/* 文件系统配额控制操作函数集合 */
 struct quotactl_ops {
 	int (*quota_on)(struct super_block *, int, int, const struct path *);
 	int (*quota_off)(struct super_block *, int);

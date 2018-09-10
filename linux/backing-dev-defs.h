@@ -163,6 +163,7 @@ struct bdi_writeback {
 #endif
 };
 
+//文件系统的块设备信息，现在的文件一通一般都是磁盘上，所以一般都是磁盘
 struct backing_dev_info {
 	struct list_head bdi_list;
 	unsigned long ra_pages;	/* max readahead in PAGE_SIZE units */

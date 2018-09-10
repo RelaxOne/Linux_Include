@@ -25,6 +25,7 @@ struct dentry;
  * name.  When @prefix is set instead, match attributes with that prefix and
  * with a non-empty suffix.
  */
+ //属性操作结构体
 struct xattr_handler {
 	const char *name;
 	const char *prefix;
