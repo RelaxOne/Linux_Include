@@ -294,7 +294,7 @@ enum rw_hint {
 #define IOCB_WRITE		(1 << 6)
 #define IOCB_NOWAIT		(1 << 7)
 
-//用户空间的异步I/O请求对应的内核数据结构
+//用来跟踪记录I/O操作的完成状态
 struct kiocb {
 	struct file		*ki_filp; 	//指向与即将进行I/O操作关联的file对象；
 	loff_t			ki_pos; 	//当前文件读写位置
@@ -393,22 +393,22 @@ int pagecache_write_end(struct file *, struct address_space *mapping,
 				struct page *page, void *fsdata);
 
 struct address_space {
-	struct inode		*host;		/* owner: inode, block_device */
-	struct radix_tree_root	i_pages;	/* cached pages */
-	atomic_t		i_mmap_writable;/* count VM_SHARED mappings */
+	struct inode		*host;		/* inode, block_device 此节点的拥有者 */
+	struct radix_tree_root	i_pages;	/* 已缓存页面 */
+	atomic_t		i_mmap_writable;/* 共享映射数 VM_SHARED记数 */
 	struct rb_root_cached	i_mmap;		/* tree of private and shared mappings */
 	struct rw_semaphore	i_mmap_rwsem;	/* protect tree, count, list */
 	/* Protected by the i_pages lock */
-	unsigned long		nrpages;	/* number of total pages */
+	unsigned long		nrpages;	/* 总页面 */
 	/* number of shadow or DAX exceptional entries */
 	unsigned long		nrexceptional;
-	pgoff_t			writeback_index;/* writeback starts here */
-	const struct address_space_operations *a_ops;	/* methods */
-	unsigned long		flags;		/* error bits */
-	spinlock_t		private_lock;	/* for use by the address_space */
+	pgoff_t			writeback_index;/* 回血起始偏移 */
+	const struct address_space_operations *a_ops;	/* 操作函数表 */
+	unsigned long		flags;		/* 错误标识 */
+	spinlock_t		private_lock;	/* 私有 address_space 锁 */
 	gfp_t			gfp_mask;	/* implicit gfp mask for allocations */
-	struct list_head	private_list;	/* for use by the address_space */
-	void			*private_data;	/* ditto */
+	struct list_head	private_list;	/* ditto 私有address_space 链表 */
+	void			*private_data;	/* ditto 数据 */
 	errseq_t		wb_err;
 } __attribute__((aligned(sizeof(long)))) __randomize_layout;
 	/*

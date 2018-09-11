@@ -29,6 +29,7 @@ enum {
 	ITER_PIPE = 8,
 };
 
+//用户和内核之间传递数据用
 struct iov_iter {
 	int type;	//iterator 的类型
 	size_t iov_offset;	//iterator 数组的起始位置

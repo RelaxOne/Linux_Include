@@ -97,9 +97,9 @@ static inline int __test_and_change_bit(int nr,
 }
 
 /**
- * test_bit - Determine whether a bit is set
- * @nr: bit number to test
- * @addr: Address to start counting from
+ * test_bit - 判断某一个 bit 位是否设置
+ * @nr: 待测试的 bit 位的偏移量
+ * @addr: 待测试的空间的起始地址
  */
 static inline int test_bit(int nr, const volatile unsigned long *addr)
 {
